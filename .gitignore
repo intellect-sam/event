@@ -1,0 +1,15 @@
+# Binaries
+*.exe
+*.out
+/bin/
+
+# Environment variables
+.env
+
+# Go workspace
+go.work
+go.work.sum
+
+# OS files
+.DS_Store
+Thumbs.db
