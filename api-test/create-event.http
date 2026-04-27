@@ -1,9 +1,29 @@
+### Step 1: Sign up (only needed once)
+POST http://localhost:8080/signup
+Content-Type: application/json
+
+{
+    "email": "test@example.com",
+    "password": "password123"
+}
+
+### Step 2: Login to get token
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+    "email": "test@example.com",
+    "password": "password123"
+}
+
+### Step 3: Create event (copy token from login response above)
 POST http://localhost:8080/events
-Content-Type: application/application/json
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJleHAiOjE3NzcyOTY0MjIsInVzZXJJZCI6MH0.whIcumQfWHuXrBILy1a-44IeDV0gMJv0M1ihg8Ypmu0
 
 {
     "name": "Test event",
     "description": "A test event",
     "location": "A test location",
-    "dataTime": "2025-01-01T15:30:00.000Z"
+    "dateTime": "2025-01-01T15:30:00.000Z"
 }

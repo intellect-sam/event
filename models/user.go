@@ -10,10 +10,10 @@ import (
 type User struct {
 	ID       int64
 	Email    string `binding: "required"`
-	password string `binding: "required"`
+	Password string `binding: "required"`
 }
 
-func (u User) Save() error {
+func (u *User) Save() error {
 	query := "INSERT INTO users(email, password) VALUES (?, ?)"
 	stmt, err := db.DB.Prepare(query)
 	if err != nil {
@@ -22,7 +22,7 @@ func (u User) Save() error {
 
 	defer stmt.Close()
 
-	hashedPassword, err := utils.HashPassword(u.password)
+	hashedPassword, err := utils.HashPassword(u.Password)
 	if err != nil {
 		return err
 	}
@@ -38,19 +38,19 @@ func (u User) Save() error {
 
 }
 
-func (u User) ValidateCredentials() error {
-	query := "SELECT password FROM users WHERE email = ?"
+func (u *User) ValidateCredentials() error {
+	query := "SELECT id, password FROM users WHERE email = ?"
 	row := db.DB.QueryRow(query, u.Email)
 
 	var retrievedPassword string
-	err := row.Scan(&retrievedPassword)
+	err := row.Scan(&u.ID, &retrievedPassword)
 
 	if err != nil {
 		return errors.New("Crendentials invalid")
 
 	}
 
-	passwordIsValid := utils.CheckPasswordHash(u.password, retrievedPassword)
+	passwordIsValid := utils.CheckPasswordHash(u.Password, retrievedPassword)
 
 	if !passwordIsValid {
 		return errors.New("Crendentials invalid")

@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/intellect-sam/event/models"
+	"github.com/intellect-sam/event/utils"
 )
 
 func signup(context *gin.Context) {
@@ -37,7 +38,7 @@ func login(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"message": "could not parse the request data"})
 		return
 	}
-	fmt.Print(&user)
+	fmt.Print(user)
 
 	err = user.ValidateCredentials()
 
@@ -46,5 +47,12 @@ func login(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusOK, gin.H{"message": "Login successful"})
+	token, err := utils.GenerateToken(user.Email, user.ID)
+
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not generate token"})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"message": "Login successful", "token": token})
 }
