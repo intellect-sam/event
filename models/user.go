@@ -8,9 +8,9 @@ import (
 )
 
 type User struct {
-	ID       int64
-	Email    string `binding: "required"`
-	Password string `binding: "required"`
+	ID       int64  `json:"-"`
+	Email    string `json:"email" binding:"required" example:"user@example.com"`
+	Password string `json:"password" binding:"required" example:"password123"`
 }
 
 func (u *User) Save() error {

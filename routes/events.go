@@ -8,6 +8,11 @@ import (
 	"github.com/intellect-sam/event/models"
 )
 
+// @Summary      Get all events
+// @Tags         events
+// @Produce      json
+// @Success      200 {array} models.Event
+// @Router       /events [get]
 func getEvents(context *gin.Context) {
 	events, err := models.GetAllEvents()
 
@@ -34,6 +39,14 @@ func getEvent(context *gin.Context) {
 
 }
 
+// @Summary      Create event
+// @Tags         events
+// @Accept       json
+// @Produce      json
+// @Param        event body models.Event true "Event data"
+// @Success      201 {object} map[string]string
+// @Security     BearerAuth
+// @Router       /events [post]
 func createEvents(context *gin.Context) {
 
 	var event models.Event
