@@ -10,7 +10,6 @@ import (
 
 // @Summary      Register for an event
 // @Description  Registers the authenticated user for a specific event
-// @Tags         Events
 // @Produce      json
 // @Param        id path int true "Event ID"
 // @Success      201 "Successfully registered for event"
